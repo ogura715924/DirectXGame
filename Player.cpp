@@ -19,4 +19,7 @@ void Player::Update(){
 void Player::Draw(ViewProjection&ViewProjection) {
 	//3Dモデルを描画
 	model_->Draw(worldTransform_, ViewProjection, textureHandle_);
+
+	//シングルトンイン巣探査うを取得する
+	input_ = Input::GetInstance();
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include"Model.h"
 #include"WorldTransform.h"
+#include"Input.h"
 
 
 ///自キャラ
@@ -13,6 +14,9 @@ public:
 	void Update();
 	//描画
 	void Draw(ViewProjection& ViewProjection);
+
+	//キーボード入力
+	Input* input_ = nullptr;
 
 private:
 	//ワールド変換データ
