@@ -7,30 +7,23 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {
-}
+GameScene::~GameScene() {}
 
 void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-
 }
 
-void GameScene::Update() {
-	
-	}
-	
+void GameScene::Update() {}
 
 void GameScene::Draw() {
 
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-#pragma region
-	//背景スプライト描画
-	
+#pragma region 背景スプライト描画
 
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
