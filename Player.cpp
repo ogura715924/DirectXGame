@@ -1,22 +1,22 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include<cassert>
 //#include"cassert.h"
 
 void Player::Initialize(Model*model,uint32_t textureHandle) {
-	//ˆø”‚©‚çŽó‚¯Žæ‚Á‚½ƒ‚ƒfƒ‹‚ª‘g‚Ýž‚Ü‚ê‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+	//å¼•æ•°ã‹ã‚‰å—ã‘å–ã£ãŸãƒ¢ãƒ‡ãƒ«ãŒçµ„ã¿è¾¼ã¾ã‚Œã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	assert(model);
-	//ˆø”‚©‚çƒ‚ƒfƒ‹‚ÆƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹‚ðŽó‚¯Žæ‚é
+	//å¼•æ•°ã‹ã‚‰ãƒ¢ãƒ‡ãƒ«ã¨ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«ã‚’å—ã‘å–ã‚‹
 	model_ = model;
 	textureHandle_ = textureHandle;
 
-	//ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ì‰Šú‰»
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®åˆæœŸåŒ–
 	worldTransform_.Initialize();
 }
 void Player::Update(){
-	//s—ñ‚ð’è”ƒoƒbƒtƒ@‚É“]‘—
+	//è¡Œåˆ—ã‚’å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«è»¢é€
 	worldTransform_.TransferMatrix();
 }
 void Player::Draw(ViewProjection&ViewProjection) {
-	//3Dƒ‚ƒfƒ‹‚ð•`‰æ
+	//3Dãƒ¢ãƒ‡ãƒ«ã‚’æç”»
 	model_->Draw(worldTransform_, ViewProjection, textureHandle_);
 }

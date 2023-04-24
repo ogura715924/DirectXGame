@@ -54,7 +54,8 @@ void GameScene::Draw() {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-#pragma region 背景スプライト描画
+#pragma region 
+	//背景スプライト描画
 	
 
 	/// <summary>
@@ -67,7 +68,8 @@ void GameScene::Draw() {
 	dxCommon_->ClearDepthBuffer();
 #pragma endregion
 
-#pragma region 3Dオブジェクト描画
+#pragma region 
+	//3Dオブジェクト描画
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 	//自キャラの描画
@@ -82,7 +84,8 @@ void GameScene::Draw() {
 	Model::PostDraw();
 #pragma endregion
 
-#pragma region 前景スプライト描画
+#pragma region 
+	//前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);
 
