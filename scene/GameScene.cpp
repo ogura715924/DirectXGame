@@ -1,8 +1,8 @@
 #include "GameScene.h"
-#include "TextureManager.h"
+#include "AxisIndicator.h"
 #include "ImGuiManager.h"
-#include"PrimitiveDrawer.h"
-#include"AxisIndicator.h"
+#include "PrimitiveDrawer.h"
+#include "TextureManager.h"
 #include <cassert>
 
 GameScene::GameScene() {}
@@ -49,8 +49,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	
-	
+
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
@@ -62,7 +61,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
