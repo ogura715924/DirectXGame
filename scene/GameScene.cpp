@@ -14,9 +14,31 @@ void GameScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+	//デバッグカメラの生成
+	debugCamerra_ = new DebugCamera(1280, 720);
+	//軸方向表示の表示を有効にする
+	AxisIndicator::GetInstance()->SetVisible(true);
+	//軸方向が参照するビュープロジェクションを指定する(アドレス渡し)
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+#ifdef _DEBUG
+	if (input_->TriggerKey(//切り替えキー)){
+//デバッグカメラ有効フラグをトグル
+}
+#endif
+		//カメラの処理
+	if (isDebubugCameraActive_) {
+	//デバックカメラの更新処理入れる
+		viewProjection_.matView = でバックカメラのビュー行列を入れる;
+	viewProjection_.matProjection = // デバッグカメラのプロジェクション行列を入れる
+		                            // ビュープロジェクション行列の転送
+		viewProjection_.TransferMatrix();
+	} else {
+	//ビュープロジェクション行列のの更新と転送
+	}
+}
 
 void GameScene::Draw() {
 

@@ -45,9 +45,10 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
-
+	//デバッグカメラ
+	DebugCamera* debugCamerra_ = nullptr;
 	// テクスチャハンドル
-
+	
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
