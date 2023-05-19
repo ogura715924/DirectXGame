@@ -59,7 +59,7 @@ void Player::Update(){
 	matRotZ.m[1][1] = cosf(worldTransform_.rotation_.z);
 	matRotZ.m[2][2] = 1;
 	matRotZ.m[3][3] = 1;
-//	Matrix4x4 matRot = matRotZ * matRotX * matRotY;
+	Matrix4x4 matRot = matRotZ * matRotX * matRotY;
 
 	//並行行列を宣言
 	Matrix4x4 matTrans = {0};
@@ -70,7 +70,7 @@ void Player::Update(){
 	matTrans.m[3][0] = worldTransform_.translation_.x;
 	matTrans.m[3][1] = worldTransform_.translation_.y;
 	matTrans.m[3][2] = worldTransform_.translation_.z;
-//	worldTransform_.matWorld_ = matScale * matRot * matTrans;
+	worldTransform_.matWorld_ = matScale * matRot * matTrans;
 
 	//行列を定数バッファに転送
 	worldTransform_.TransferMatrix();
@@ -126,7 +126,7 @@ void Player::Update(){
 	//範囲を超えない処理
 	move.x=max(move.x,-kMoveLimitX);
 	move.x=min(move.x,+kMoveLimitX);
-	//move.y=max(move.y -kMoveLimitY);
+	move.y=max(move.y -kMoveLimitY);
 	move.y=min(move.y,+kMoveLimitY);
 
 }
