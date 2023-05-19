@@ -20,7 +20,11 @@ public: // メンバ関数
 	/// コンストクラタ
 	/// </summary>
 	GameScene();
+	//デバッグカメラ有効
+	bool isDebugCameraActive_=false;
 
+	// カメラ
+	ViewProjection& viewProjection_;
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -46,9 +50,10 @@ private: // メンバ変数
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	//デバッグカメラ
-	DebugCamera* debugCamerra_ = nullptr;
-	// テクスチャハンドル
+	DebugCamera* debugCamera_ = nullptr;
 	
+	// テクスチャハンドル
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

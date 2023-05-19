@@ -5,9 +5,9 @@
 #include "TextureManager.h"
 #include <cassert>
 
-GameScene::GameScene() {}
+//GameScene::GameScene(){}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() { delete debugCamera_; }
 
 void GameScene::Initialize() {
 
@@ -15,7 +15,7 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	//デバッグカメラの生成
-	debugCamerra_ = new DebugCamera(1280, 720);
+	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向が参照するビュープロジェクションを指定する(アドレス渡し)
@@ -23,20 +23,24 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
+
+	debugCamera_->Update();
+
 #ifdef _DEBUG
 	if (input_->TriggerKey(//切り替えキー)){
 //デバッグカメラ有効フラグをトグル
 }
 #endif
 		//カメラの処理
-	if (isDebubugCameraActive_) {
+	if (isDebugCameraActive_) {
 	//デバックカメラの更新処理入れる
-		viewProjection_.matView = でバックカメラのビュー行列を入れる;
-	viewProjection_.matProjection = // デバッグカメラのプロジェクション行列を入れる
-		                            // ビュープロジェクション行列の転送
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+	viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+   // ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
 	} else {
 	//ビュープロジェクション行列のの更新と転送
+
 	}
 }
 

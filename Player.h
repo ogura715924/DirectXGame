@@ -13,7 +13,7 @@ public:
 	//更新
 	void Update();
 	//描画
-	void Draw(ViewProjection& ViewProjection);
+	void Draw(ViewProjection& viewProjection_);
 
 	//キーボード入力
 	Input* input_ = nullptr;
