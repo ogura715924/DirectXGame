@@ -5,17 +5,18 @@
 #include "TextureManager.h"
 #include <cassert>
 
-GameScene::GameScene(){
+GameScene::GameScene(){}
 
+GameScene::~GameScene() { 
+	delete debugCamera_; 
 }
-
-GameScene::~GameScene() { delete debugCamera_; }
 
 void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+	viewProjection_.Initialize();
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする

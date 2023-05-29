@@ -10,6 +10,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -20,11 +21,7 @@ public: // メンバ関数
 	/// コンストクラタ
 	/// </summary>
 	GameScene();
-	//デバッグカメラ有効
-	bool isDebugCameraActive_=false;
 
-	// カメラ
-	ViewProjection& viewProjection_;
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -45,6 +42,7 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -52,6 +50,12 @@ private: // メンバ変数
 	//デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	
+		// デバッグカメラ有効
+	bool isDebugCameraActive_ = false;
+
+	// カメラ
+	ViewProjection viewProjection_;
+
 	// テクスチャハンドル
 
 	/// <summary>

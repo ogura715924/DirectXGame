@@ -46,3 +46,5 @@ struct WorldTransform {
 	/// </summary>
 	void TransferMatrix();
 };
+
+Matrix4x4 MakeMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate);
