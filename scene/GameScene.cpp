@@ -50,8 +50,9 @@ void GameScene::Update() {
 	//ビュープロジェクション行列のの更新と転送
 
 	}
-
-}
+    // 自キャラの更新
+    player_->Update();
+    }
 
 void GameScene::Draw() {
 
@@ -77,7 +78,9 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	
+
+	// 自キャラの描画
+	player_->Draw(viewProjection_);
 
 
 	// 3Dオブジェクト描画後処理
