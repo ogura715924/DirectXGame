@@ -55,7 +55,7 @@ private: // メンバ変数
 	Model* model_; 
 	//デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
-	
+	uint32_t textureHandle_;  
 		// デバッグカメラ有効
 	bool isDebugCameraActive_ = false;
 
