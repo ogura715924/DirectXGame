@@ -20,8 +20,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 
 	
 	// X,Y,Z方向のスケーリングを設定
-	worldTransform_.scale_ = {5.0f, 1.0f, 1.0f};
-	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+	/*worldTransform_.scale_ = {5.0f, 1.0f, 1.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};*/
 
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
