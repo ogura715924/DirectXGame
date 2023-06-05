@@ -25,7 +25,15 @@ void GameScene::Initialize() {
 	//軸方向が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
-	
+		
+	// ファイル名を指定してテクスチャを読み込む
+	textureHandle_ = TextureManager::Load("mario.jpg");
+	// 3Dモデルの生成
+	model_ = Model::Create();
+	// ビュープロジェクションの初期化
+	viewProjection_.Initialize();
+	// ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
+	PrimitiveDrawer::GetInstance()->SetViewProjection(&viewProjection_);
 
 	// 自キャラの生成
 	player_ = new Player();
