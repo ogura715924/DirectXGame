@@ -6,11 +6,6 @@
 #include <math.h>
 #define _USE_MATH_DEFINES
 
-Vector3 scale(1.0f, 1.0f, 1.0f);
-Vector3 rot(0.0f, 0.0f, 0.0f);
-Vector3 translate(0.0f, 0.0f, 0.0f);
-
-
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// 引数から受け取ったモデルが組み込まれているかチェック
 	assert(model);
@@ -29,7 +24,6 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 
-	Matrix4x4 worldMatrix = MakeMatrix(scale, rot, translate);
 	
 }
 void Player::Update(){
@@ -51,9 +45,9 @@ void Player::Update(){
 		move.x += kCharacterSpeed;
 	}
 	// 押した方向でベクトルを変更(上下)
-	if (input_ -> PushKey(DIK_UP)) {
+	if (input_ -> PushKey(DIK_DOWN)) {
 		move.y -= kCharacterSpeed;
-	} else if (input_->PushKey(DIK_DOWN)) {
+	} else if (input_->PushKey(DIK_UP)) {
 		move.y += kCharacterSpeed;
 	}
 
@@ -61,17 +55,28 @@ void Player::Update(){
 	worldTransform_.translation_.x += move.x;
 	worldTransform_.translation_.y += move.y;
 	worldTransform_.translation_.z += move.z;
+	//移動限界座標
+	const float kMoveLimitX = 1280;
+	const float kMoveLimitY = 720;
 
-	worldTransform_.translation_.x = sqrt(move.x * move.x + move.y * move.y);
-	worldTransform_.translation_.y = sqrt(move.x * move.x + move.y * move.y);
-	worldTransform_.translation_.z = sqrt(move.x * move.x + move.y * move.y);
+	//範囲を超えない処理
+	move.x=max(move.x,-kMoveLimitX);
+	move.x=min(move.x,+kMoveLimitX);
+	move.y = max(move.y, -kMoveLimitY);
+	move.y=min(move.y,+kMoveLimitY);
+
+	//worldTransform_.translation_.x = sqrt(move.x * move.x + move.y * move.y);
+	//worldTransform_.translation_.y = sqrt(move.x * move.x + move.y * move.y);
+	//worldTransform_.translation_.z = sqrt(move.x * move.x + move.y * move.y);
 
 	//行列更新
 	worldTransform_.matWorld_ = MakeMatrix(
 	    worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 
+	worldTransform_.TransferMatrix();
+
 	//キャラクターの座標を画面表示する処理
-	ImGui::Begin("");
+	ImGui::Begin("Debug");
 	float playerpos[] = {
 	    worldTransform_.translation_.x, worldTransform_.translation_.y,
 	    worldTransform_.translation_.z};
@@ -82,16 +87,6 @@ void Player::Update(){
 
 	ImGui::End();
 	
-
-	//移動限界座標
-	const float kMoveLimitX = 1280;
-	const float kMoveLimitY = 720;
-
-	//範囲を超えない処理
-	move.x=max(move.x,-kMoveLimitX);
-	move.x=min(move.x,+kMoveLimitX);
-	move.y = max(move.y, -kMoveLimitY);
-	move.y=min(move.y,+kMoveLimitY);
 
 }
 

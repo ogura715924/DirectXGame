@@ -5,10 +5,10 @@
 #include "TextureManager.h"
 #include <cassert>
 
-GameScene::GameScene(){}
+GameScene::GameScene() {}
 
-GameScene::~GameScene() { 
-	delete debugCamera_; 
+GameScene::~GameScene() {
+	delete debugCamera_;
 	delete player_;
 }
 
@@ -18,14 +18,13 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	viewProjection_.Initialize();
-	//デバッグカメラの生成
+	// デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
-	//軸方向表示の表示を有効にする
+	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
-	//軸方向が参照するビュープロジェクションを指定する(アドレス渡し)
+	// 軸方向が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
-		
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("mario.jpg");
 	// 3Dモデルの生成
@@ -43,27 +42,26 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-	debugCamera_->Update();
-
-//#ifdef _DEBUG
-//	if (input_->TriggerKey(A)){
-////デバッグカメラ有効フラグをトグル
-//}
-//#endif
-		//カメラの処理
+	// #ifdef _DEBUG
+	//	if (input_->TriggerKey(A)){
+	////デバッグカメラ有効フラグをトグル
+	//}
+	// #endif
+	// カメラの処理
 	if (isDebugCameraActive_) {
-	//デバックカメラの更新処理入れる
+		// デバックカメラの更新処理入れる
+		debugCamera_->Update();
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
-	viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-   // ビュープロジェクション行列の転送
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		// ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
 	} else {
-	//ビュープロジェクション行列のの更新と転送
-
+		// ビュープロジェクション行列のの更新と転送
+		viewProjection_.UpdateMatrix();
 	}
-    // 自キャラの更新
-    player_->Update();
-    }
+	// 自キャラの更新
+	player_->Update();
+}
 
 void GameScene::Draw() {
 
@@ -92,7 +90,6 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw(viewProjection_);
-
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
