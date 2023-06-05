@@ -34,11 +34,11 @@ void GameScene::Update() {
 
 	debugCamera_->Update();
 
-#ifdef _DEBUG
-	if (input_->TriggerKey(//切り替えキー)){
-//デバッグカメラ有効フラグをトグル
-}
-#endif
+//#ifdef _DEBUG
+//	if (input_->TriggerKey(A)){
+////デバッグカメラ有効フラグをトグル
+//}
+//#endif
 		//カメラの処理
 	if (isDebugCameraActive_) {
 	//デバックカメラの更新処理入れる
