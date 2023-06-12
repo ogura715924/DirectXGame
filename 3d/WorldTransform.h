@@ -45,6 +45,8 @@ struct WorldTransform {
 	/// 行列を転送する
 	/// </summary>
 	void TransferMatrix();
+	//行列を計算・転送する
+	void UpdateMatrix();
 };
 
-Matrix4x4 MakeMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate);
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate);

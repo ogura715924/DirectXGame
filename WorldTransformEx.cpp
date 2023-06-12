@@ -4,7 +4,7 @@
 // 行列の掛け算
 
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
-	Matrix4x4 resultMultiply;
+	Matrix4x4 resultMultiply{};
 	for (int row = 0; row < 4; ++row) {
 		for (int column = 0; column < 4; ++column) {
 			resultMultiply.m[row][column] =
@@ -23,7 +23,7 @@ Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 /// <param name="rot">ローカル回転量</param>
 /// <param name="translate">ローカル座標</param>
 /// <returns>ワールド行列</returns>
-Matrix4x4 MakeMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate) {
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate) {
 	Matrix4x4 result = {0};
 
 	Matrix4x4 matScale = {0};
@@ -74,4 +74,11 @@ Matrix4x4 MakeMatrix(const Vector3& scale, const Vector3& rot, const Vector3& tr
 
 	// 戻り値　スケール*回転*平行移動;
 	return Multiply(Multiply(matScale, matRot),matTrans);
+}
+
+void WorldTransform::UpdateMatrix() {
+//スケール、回転、平行移動を合成して行列を計算する
+	matWorld_ = MakeAffineMatrix(scale_, rotation_, translation_);
+	//定数バッファに転送する
+	TransferMatrix();
 }
