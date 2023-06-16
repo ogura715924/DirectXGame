@@ -111,7 +111,7 @@ void Player::Rotate() {
 void Player::Attack() {
 	// 弾を生成し、初期化
 
-	if (input_->PushKey(DIK_SPACE) == 0 && input_->PushKey(DIK_SPACE) != 0) {
+	if (input_->PushKey(DIK_SPACE) ) {
 		//弾があれば解放する
 		/*if (bullet_) {
 			delete bullet_;
