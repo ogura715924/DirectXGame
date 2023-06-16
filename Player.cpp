@@ -22,7 +22,14 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
-}
+
+	//bullet_の解放
+	
+	for (PlayerBullet* bullet : bullets_) {
+		bullet->Initialize(model_, worldTransform_.translation_);
+	}
+
+	}
 void Player::Update() {
 
 	// 行列を定数バッファに転送
@@ -85,8 +92,8 @@ void Player::Update() {
 	// キャラクター攻撃処理
 	Attack();
 	// 弾更新
-	if (bullet_) /*if(bullet_!=nullptr)*/ {
-		bullet_->Update();
+	for (PlayerBullet* bullet: bullets_) {
+		bullet->Update();
 	}
 }
 
@@ -104,19 +111,30 @@ void Player::Rotate() {
 void Player::Attack() {
 	// 弾を生成し、初期化
 
-	if (input_->PushKey(DIK_SPACE)) {
+	if (input_->PushKey(DIK_SPACE) == 0 && input_->PushKey(DIK_SPACE) != 0) {
+		//弾があれば解放する
+		/*if (bullet_) {
+			delete bullet_;
+			bullet_ = nullptr;
+		}*/
+
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_, worldTransform_.translation_);
 		// 弾を登録する
-		bullet_ = newBullet;
+		bullets_.push_back(newBullet);
 	}
 }
+
+
+Player::~Player() {
+}
+
 
 void Player::Draw(ViewProjection& ViewProjection) {
 	// 3Dモデルを描画
 	model_->Draw(worldTransform_, ViewProjection, textureHandle_);
 
-	if (bullet_) {
-		bullet_->Draw(ViewProjection);
+	for (PlayerBullet* bullet : bullets_) {
+		bullet->Draw(ViewProjection);
 	}
 }

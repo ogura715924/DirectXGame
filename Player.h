@@ -4,7 +4,7 @@
 #include"Input.h"
 #include "PlayerBullet.h"
 #include"Vector3.h"
-
+#include<list>
 
 ///自キャラ
 
@@ -18,8 +18,12 @@ public:
 	void Rotate();
 	//攻撃
 	void Attack();
+	// デストラクタ
+	~Player();
 	//描画
 	void Draw(ViewProjection& viewProjection_);
+	
+
 	
 
 	//キーボード入力
@@ -29,6 +33,7 @@ public:
 private:
 	// 弾
 	PlayerBullet* bullet_ = nullptr;
+	std::list<PlayerBullet*> bullets_;
 	//ワールド変換データ
 	WorldTransform worldTransform_;
 	//モデル
