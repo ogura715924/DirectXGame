@@ -40,4 +40,4 @@ void PlayerBullet::Update() {
 void PlayerBullet::Draw(const ViewProjection& viewProjection_) {
 	// モデルの描画
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
-};
+}

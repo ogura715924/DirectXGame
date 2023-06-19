@@ -32,7 +32,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 void Player::Update() {
 
 	// 行列を定数バッファに転送
-	worldTransform_.TransferMatrix();
+	worldTransform_.UpdateMatrix();
 
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};

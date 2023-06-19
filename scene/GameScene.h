@@ -10,6 +10,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include"Player.h"
+#include"Enemy.h"
 
 
 
@@ -63,6 +64,10 @@ private: // メンバ変数
 	ViewProjection viewProjection_;
 	// 自キャラ
 	Player* player_ = nullptr;
+	//敵キャラ
+	Enemy* enemy_ = nullptr;
+	
+
 	// テクスチャハンドル
 
 	/// <summary>

@@ -10,6 +10,7 @@ GameScene::GameScene() {}
 GameScene::~GameScene() {
 	delete debugCamera_;
 	delete player_;
+	delete enemy_;
 }
 
 void GameScene::Initialize() {
@@ -38,8 +39,12 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
-	
-	
+
+	//	敵キャラの生成
+	enemy_ = new Enemy();
+	// 敵キャラの初期化
+	Vector3 velocity(0.0f, 0.0f, 1.0f); // 速度を設定する
+	enemy_->Initialize(model_, velocity);
 }
 
 void GameScene::Update() {
@@ -64,6 +69,8 @@ void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
 	player_->Rotate();
+	// 敵キャラの更新
+	enemy_->Update();
 }
 
 void GameScene::Draw() {
@@ -93,6 +100,8 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw(viewProjection_);
+	// 敵キャラの描画
+	enemy_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
