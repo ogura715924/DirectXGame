@@ -31,4 +31,3 @@ public:
 	//ですフラグ
 	bool isDead_ = false;
 };
-
