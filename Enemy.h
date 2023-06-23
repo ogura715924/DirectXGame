@@ -2,6 +2,14 @@
 #include"Model.h"
 #include"WorldTransform.h"
 #include"Vector3.h"
+#include "ViewProjection.h"
+
+
+// 行動フェーズ
+enum class Phase {
+	Approach, // 接近する
+	Leave,    // 離脱する
+	};
 
 class Enemy {
 public:
@@ -22,5 +30,7 @@ private:
 	uint32_t textureHandle_ = 0u;
 	// 速度
 	Vector3 velocity_;
+	// フェーズ
+	Phase phase_;
 };
 

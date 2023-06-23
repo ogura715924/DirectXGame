@@ -25,7 +25,24 @@ void Enemy::Update() {
 	worldTransform_.UpdateMatrix();
 
 	// 座標を移動させる
-	worldTransform_.translation_.z -= velocity_.z;
+	worldTransform_.translation_.z -= 0.1f;
+
+	//フェーズ
+	switch (phase_) {
+	case Phase::Approach:
+	default:
+		//移動(ベクトルを加算)
+		worldTransform_.translation_.x += 0.1f;
+		//既定の位置に到達したら離脱
+		if (worldTransform_.translation_.z < 0.0f) {
+			phase_ = Phase::Leave;
+		}
+	case Phase::Leave:
+		//移動（ベクトルを加算）
+		worldTransform_.translation_.x += 0.1f;
+		worldTransform_.translation_.y += 0.1f;
+		break;
+	}
 
 }
 

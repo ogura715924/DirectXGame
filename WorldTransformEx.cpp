@@ -23,7 +23,7 @@ Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 /// <param name="rot">ローカル回転量</param>
 /// <param name="translate">ローカル座標</param>
 /// <returns>ワールド行列</returns>
-Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate) {
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 	Matrix4x4 result = {0};
 
 	Matrix4x4 matScale = {0};
@@ -35,32 +35,32 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 	// 1.X軸回転行列
 	Matrix4x4 matRotX = {0};
 	matRotX.m[0][0] = 1;
-	matRotX.m[1][1] = cosf(rot.x);
-	matRotX.m[2][1] = -sinf(rot.x);
-	matRotX.m[1][2] = sinf(rot.x);
-	matRotX.m[2][2] = cosf(rot.x);
+	matRotX.m[1][1] = cosf(rotate.x);
+	matRotX.m[2][1] = -sinf(rotate.x);
+	matRotX.m[1][2] = sinf(rotate.x);
+	matRotX.m[2][2] = cosf(rotate.x);
 	matRotX.m[3][3] = 1;
 
 	// 2.Y軸回転行列
 	Matrix4x4 matRotY = {0};
-	matRotY.m[0][0] = cosf(rot.y);
+	matRotY.m[0][0] = cosf(rotate.y);
 	matRotY.m[1][1] = 1;
-	matRotY.m[0][2] = -sinf(rot.y);
-	matRotY.m[2][0] = sinf(rot.y);
-	matRotY.m[2][2] = cosf(rot.y);
+	matRotY.m[0][2] = -sinf(rotate.y);
+	matRotY.m[2][0] = sinf(rotate.y);
+	matRotY.m[2][2] = cosf(rotate.y);
 	matRotY.m[3][3] = 1;
 
 	// 3.Z軸回転行列
 	Matrix4x4 matRotZ{0};
 
-	matRotZ.m[0][0] = cosf(rot.z);
-	matRotZ.m[1][0] = sinf(rot.z);
-	matRotZ.m[0][1] = -sinf(rot.z);
-	matRotZ.m[1][1] = cosf(rot.z);
+	matRotZ.m[0][0] = cosf(rotate.z);
+	matRotZ.m[1][0] = sinf(rotate.z);
+	matRotZ.m[0][1] = -sinf(rotate.z);
+	matRotZ.m[1][1] = cosf(rotate.z);
 	matRotZ.m[2][2] = 1;
 	matRotZ.m[3][3] = 1;
 
-	Matrix4x4 matRot = Multiply(Multiply(matRotZ,matRotX),matRotY);
+	Matrix4x4 matRot = Multiply(Multiply(matRotZ, matRotX), matRotY);
 
 	// 平行移動行列を宣言
 	Matrix4x4 matTrans = {0};
@@ -73,7 +73,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 	matTrans.m[3][2] = translate.z;
 
 	// 戻り値　スケール*回転*平行移動;
-	return Multiply(Multiply(matScale, matRot),matTrans);
+	return Multiply(Multiply(matScale, matRot), matTrans);
 }
 
 void WorldTransform::UpdateMatrix() {
