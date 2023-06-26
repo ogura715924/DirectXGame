@@ -25,6 +25,7 @@ public:
 	void Fire();
 	//デストラクタ
 	~Enemy();
+	
 
 private:
 	// ワールド変換データ
@@ -43,10 +44,3 @@ private:
 	std::list<EnemyBullet*> bullets_;
 };
 
-//自機クラスの前方宣言
-class Player {
-
-	//自キャラ
-	Player* player_ = nullptr;
-
-};
