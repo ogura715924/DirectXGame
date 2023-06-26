@@ -13,6 +13,12 @@ public:
 	void Update();
 
 	void Draw(const ViewProjection& viewProjection_);
+
+	// デスタイマー
+	int32_t deathTimer_ = kLifeTime;
+	// デスフラグ
+	bool isDead_ = false;
+	//メンバ関数の追加
 	bool isDead() const { return isDead_; }
 
 	private:
@@ -26,8 +32,5 @@ public:
 	Vector3 velocity_;
 	//寿命
 	static const int32_t kLifeTime = 60 * 5;
-	//ですタイマー
-	int32_t deathTimer_ = kLifeTime;
-	//ですフラグ
-	bool isDead_ = false;
+	
 };

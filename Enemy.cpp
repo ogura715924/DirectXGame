@@ -2,6 +2,19 @@
 #include<assert.h>
 #include <cassert>
 
+
+
+// デストラクタ
+Enemy::~Enemy() {
+
+	// bullet_の解放
+
+	for (EnemyBullet* bullet : bullets_) {
+		delete bullet;
+	}
+}
+
+
 void Enemy::Initialize(Model* model, const Vector3& velocity) {
 	// NULLポインタチェック
 	assert(model);
@@ -15,6 +28,7 @@ void Enemy::Initialize(Model* model, const Vector3& velocity) {
 
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
+
 
 
 	
@@ -44,9 +58,47 @@ void Enemy::Update() {
 		break;
 	}
 
+
+	//弾関連
+	Fire();
+		for (EnemyBullet* bullet : bullets_) {
+			bullet->Update();
+		}
+		//デスフラグの立った弾を削除
+	    bullets_.remove_if([](EnemyBullet* bullet) {
+		    if (bullet->IsDead()) {
+			    delete bullet;
+			    return true;
+		    }
+		    return false;
+	    });
+
+	}
+
+
+void Enemy::Fire() {
+	// 弾の速度
+	const float kBulletSpeed = 1.0f;
+	Vector3 velocity(0, 0, kBulletSpeed);
+	//弾を生成し初期化
+	EnemyBullet* newBullet = new EnemyBullet();
+	newBullet->Intialize(model_, worldTransform_.translation_);
+
+	    // 弾を登録する
+	    bullets_.push_back( newBullet);
+
 }
+		
 
 void Enemy::Draw(const ViewProjection& viewProjection_) {
 	// モデルの描画
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	   
+	
+	for (EnemyBullet* bullet : bullets_) {
+		bullet->Draw(viewProjection_);
+	}
 }
+
+
+

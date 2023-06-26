@@ -6,6 +6,21 @@
 #include <math.h>
 #define _USE_MATH_DEFINES
 
+
+// デストラクタ
+Player::~Player() {
+
+	// bullet_の解放
+
+	for (PlayerBullet* bullet : bullets_) {
+		// bullets -> PlayerBullet*のリスト(配列のすごい版)
+		// 範囲forで何をやっているか
+		// bullet = bullets_[i];をやっていてbullets_の数分だけループする
+		delete bullet;
+	}
+}
+
+
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// 引数から受け取ったモデルが組み込まれているかチェック
 	assert(model);
@@ -23,11 +38,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 
-	// bullet_の解放
 
-	/*for (PlayerBullet* bullet : bullets_) {
-	    bullet->Initialize(model_, worldTransform_.translation_, velocity);
-	}*/
+
 }
 void Player::Update() {
 
@@ -94,7 +106,7 @@ void Player::Update() {
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Update();
 	}
-	// ですフラグの立った弾を削除
+	// デスフラグの立った弾を削除
 	bullets_.remove_if([](PlayerBullet* bullet) {
 		if (bullet->isDead()) {
 			delete bullet;
@@ -119,12 +131,7 @@ void Player::Attack() {
 	// 弾を生成し、初期化
 
 	if (input_->PushKey(DIK_SPACE)) {
-		// 弾があれば解放する
-		/*if (bullet_) {
-		    delete bullet_;
-		    bullet_ = nullptr;
-		}*/
-
+	
 		// 弾の速度
 		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);
@@ -139,7 +146,6 @@ void Player::Attack() {
 	}
 }
 
-Player::~Player() {}
 
 void Player::Draw(ViewProjection& ViewProjection) {
 	// 3Dモデルを描画

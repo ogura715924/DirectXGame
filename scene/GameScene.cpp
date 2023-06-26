@@ -45,6 +45,7 @@ void GameScene::Initialize() {
 	// 敵キャラの初期化
 	Vector3 velocity(0.0f, 0.0f, 1.0f); // 速度を設定する
 	enemy_->Initialize(model_, velocity);
+
 }
 
 void GameScene::Update() {
