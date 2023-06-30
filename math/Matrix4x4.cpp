@@ -10,3 +10,16 @@ Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m) {
 
 	return result;
 }
+
+// “àÏ
+float Dot(const Vector3& v1, const Vector3& v2) { return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z; }
+
+// ’·‚³(ƒmƒ‹ƒ€)
+float Length(const Vector3& v) { return sqrtf(Dot(v, v)); }
+
+
+// ³‹K‰»
+Vector3 Normalize(const Vector3& v) {
+	float length = Length(v);
+	return {v.x / length, v.y / length, v.z / length};
+}

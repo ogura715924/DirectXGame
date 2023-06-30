@@ -5,7 +5,8 @@
 #include "TextureManager.h"
 #include <cassert>
 
-GameScene::GameScene() {}
+    GameScene::GameScene() {
+}
 
 GameScene::~GameScene() {
 	delete debugCamera_;
@@ -42,6 +43,8 @@ void GameScene::Initialize() {
 
 	//	敵キャラの生成
 	enemy_ = new Enemy();
+	// 敵キャラに自キャラのアドレスを渡す
+	enemy_->SetPlayer(player_);
 	// 敵キャラの初期化
 	Vector3 velocity(0.0f, 0.0f, 1.0f); // 速度を設定する
 	enemy_->Initialize(model_, velocity);
@@ -79,7 +82,7 @@ void GameScene::Draw() {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-#pragma region 背景スプライト描画
+//#pragma region背景スプライト描画
 
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる

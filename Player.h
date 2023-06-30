@@ -1,44 +1,41 @@
 ﻿#pragma once
-#include"Model.h"
-#include"WorldTransform.h"
-#include"Input.h"
+#include "Input.h"
+#include "Model.h"
 #include "PlayerBullet.h"
-#include"Vector3.h"
-#include<list>
+#include "Vector3.h"
+#include "WorldTransform.h"
+#include <list>
 
-///自キャラ
+    /// 自キャラ
 
-class Player {
+    class Player {
 public:
-	//初期化
+	// 初期化
 	void Initialize(Model* model_, uint32_t textureHandle);
-	//更新
+	// 更新
 	void Update();
-	//回転
+	// 回転
 	void Rotate();
-	//攻撃
+	// 攻撃
 	void Attack();
 	// デストラクタ
 	~Player();
-	//描画
+	// 描画
 	void Draw(ViewProjection& viewProjection_);
-	
 
-	
-
-	//キーボード入力
+	// キーボード入力
 	Input* input_ = nullptr;
-	
+	// ワールド座標を取得
+	Vector3 GetWorldPosition();
 
 private:
 	// 弾
 	PlayerBullet* bullet_ = nullptr;
 	std::list<PlayerBullet*> bullets_;
-	//ワールド変換データ
+	// ワールド変換データ
 	WorldTransform worldTransform_;
-	//モデル
+	// モデル
 	Model* model_ = nullptr;
-	//テクスチャハンドル
+	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
-
 };

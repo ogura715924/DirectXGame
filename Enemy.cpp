@@ -1,7 +1,7 @@
 ﻿#include "Enemy.h"
 #include<assert.h>
 #include <cassert>
-
+#include"Player.h"
 
 
 // デストラクタ
@@ -12,6 +12,18 @@ Enemy::~Enemy() {
 	for (EnemyBullet* bullet : bullets_) {
 		delete bullet;
 	}
+}
+
+Vector3 Enemy::GetWorldPosition() {
+
+	// ワールド座標を入れる変数
+	Vector3 worldPos{};
+	worldTransform_.matWorld_.m;
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+	return worldPos;
 }
 
 
@@ -35,9 +47,7 @@ void Enemy::Initialize(Model* model, const Vector3& velocity) {
 }
 
 void Enemy::Update() {
-	// ワールドトランスフォームの更新　場所動かすときに使える
-	worldTransform_.UpdateMatrix();
-
+	
 	// 座標を移動させる
 	worldTransform_.translation_.z -= 0.1f;
 
@@ -58,6 +68,9 @@ void Enemy::Update() {
 		break;
 	}
 
+	// ワールドトランスフォームの更新　場所動かすときに使える
+	worldTransform_.UpdateMatrix();
+
 
 	//弾関連
 	Fire();
@@ -77,9 +90,25 @@ void Enemy::Update() {
 
 
 void Enemy::Fire() {
+	    assert(player_);
+
 	// 弾の速度
 	const float kBulletSpeed = 1.0f;
-	Vector3 velocity(0, 0, kBulletSpeed);
+		  //自キャラのワールド座標を取得する
+	player_->GetWorldPosition();
+	  //敵キャラのワールド座標を取得する
+	GetWorldPosition();
+	  //敵キャラ->自キャラの差分ベクトルを求める
+	Vector3 DifferenceVector = {
+	    GetWorldPosition().x - player_->GetWorldPosition().x,
+	    GetWorldPosition().y - player_->GetWorldPosition().y,
+	    GetWorldPosition().z - player_->GetWorldPosition().z};
+	  //ベクトルの正規化
+	DifferenceVector=Normalize(DifferenceVector);
+	
+      //ベクトルの長さを速さに合わせる
+	DifferenceVector = {DifferenceVector.x * 2, DifferenceVector.y * 2, DifferenceVector.z * 2};
+
 	//弾を生成し初期化
 	EnemyBullet* newBullet = new EnemyBullet();
 	newBullet->Intialize(model_, worldTransform_.translation_);
@@ -99,6 +128,4 @@ void Enemy::Draw(const ViewProjection& viewProjection_) {
 		bullet->Draw(viewProjection_);
 	}
 }
-
-
 

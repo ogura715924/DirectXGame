@@ -6,7 +6,7 @@
 #include <math.h>
 #define _USE_MATH_DEFINES
 
-
+  
 
 // デストラクタ
 Player::~Player() {
@@ -21,6 +21,17 @@ Player::~Player() {
 	}
 }
 
+Vector3 Player::GetWorldPosition() {
+
+	// ワールド座標を入れる変数
+	Vector3 worldPos{};
+	worldTransform_.matWorld_.m;
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+	return worldPos;
+}
 
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// 引数から受け取ったモデルが組み込まれているかチェック
@@ -38,14 +49,10 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
-
-
-
 }
 void Player::Update() {
 
-	// 行列を定数バッファに転送
-	worldTransform_.UpdateMatrix();
+	
 
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
@@ -100,6 +107,8 @@ void Player::Update() {
 	worldTransform_.translation_.z = playerpos[2];
 
 	ImGui::End();
+	
+	
 
 	// キャラクター弾攻撃処理
 	Attack();
@@ -115,7 +124,11 @@ void Player::Update() {
 		}
 		return false;
 	});
+
+	// 行列を定数バッファに転送
+	worldTransform_.UpdateMatrix();
 }
+
 
 void Player::Rotate() {
 	// 回転速さ[ラジアン/frame]
@@ -132,7 +145,7 @@ void Player::Attack() {
 	// 弾を生成し、初期化
 
 	if (input_->PushKey(DIK_SPACE)) {
-	
+
 		// 弾の速度
 		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);
@@ -146,7 +159,6 @@ void Player::Attack() {
 		bullets_.push_back(newBullet);
 	}
 }
-
 
 void Player::Draw(ViewProjection& ViewProjection) {
 	// 3Dモデルを描画
