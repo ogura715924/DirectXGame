@@ -1,8 +1,7 @@
 ﻿#include "Enemy.h"
-#include<assert.h>
+#include "Player.h"
+#include <assert.h>
 #include <cassert>
-#include"Player.h"
-
 
 // デストラクタ
 Enemy::~Enemy() {
@@ -26,43 +25,39 @@ Vector3 Enemy::GetWorldPosition() {
 	return worldPos;
 }
 
-
 void Enemy::Initialize(Model* model, const Vector3& velocity) {
 	// NULLポインタチェック
 	assert(model);
 
-	
 	// 引数からモデルとテクスチャハンドルを受け取る
 	model_ = model;
 	velocity_ = velocity;
-	 //テクスチャ読み込み
+	// テクスチャ読み込み
 	textureHandle_ = TextureManager::Load("jousi.png");
 
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 
 	worldTransform_.translation_.z = 3.0f;
-
-	
 }
 
 void Enemy::Update() {
-	
+
 	// 座標を移動させる
 	worldTransform_.translation_.z -= 0.1f;
 
-	//フェーズ
+	// フェーズ
 	switch (phase_) {
 	case Phase::Approach:
 	default:
-		//移動(ベクトルを加算)
+		// 移動(ベクトルを加算)
 		worldTransform_.translation_.x += 0.1f;
-		//既定の位置に到達したら離脱
+		// 既定の位置に到達したら離脱
 		if (worldTransform_.translation_.z < 0.0f) {
 			phase_ = Phase::Leave;
 		}
 	case Phase::Leave:
-		//移動（ベクトルを加算）
+		// 移動（ベクトルを加算）
 		worldTransform_.translation_.x += 0.1f;
 		worldTransform_.translation_.y += 0.1f;
 		break;
@@ -71,61 +66,55 @@ void Enemy::Update() {
 	// ワールドトランスフォームの更新　場所動かすときに使える
 	worldTransform_.UpdateMatrix();
 
-
-	//弾関連
+	// 弾関連
 	Fire();
-		for (EnemyBullet* bullet : bullets_) {
-			bullet->Update();
-		}
-		//デスフラグの立った弾を削除
-	    bullets_.remove_if([](EnemyBullet* bullet) {
-		    if (bullet->IsDead()) {
-			    delete bullet;
-			    return true;
-		    }
-		    return false;
-	    });
 
+	for (EnemyBullet* bullet : bullets_) {
+		bullet->Update();
 	}
-
+	// デスフラグの立った弾を削除
+	bullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+}
 
 void Enemy::Fire() {
-	    assert(player_);
+	assert(player_);
 
 	// 弾の速度
 	const float kBulletSpeed = 0.5f;
-		  //自キャラのワールド座標を取得する
+	// 自キャラのワールド座標を取得する
 	player_->GetWorldPosition();
-	  //敵キャラのワールド座標を取得する
+	// 敵キャラのワールド座標を取得する
 	GetWorldPosition();
-	  //敵キャラ->自キャラの差分ベクトルを求める
+	// 敵キャラ->自キャラの差分ベクトルを求める
 	Vector3 DifferenceVector = {
 	    GetWorldPosition().x - player_->GetWorldPosition().x,
 	    GetWorldPosition().y - player_->GetWorldPosition().y,
 	    GetWorldPosition().z - player_->GetWorldPosition().z};
-	  //ベクトルの正規化
-	DifferenceVector=Normalize(DifferenceVector);
-	
-      //ベクトルの長さを速さに合わせる
-	kBulletSpeed*2;
+	// ベクトルの正規化
+	DifferenceVector = Normalize(DifferenceVector);
 
-	//弾を生成し初期化
+	// ベクトルの長さを速さに合わせる
+	kBulletSpeed * 2;
+
+	// 弾を生成し初期化
 	EnemyBullet* newBullet = new EnemyBullet();
 	newBullet->Intialize(model_, worldTransform_.translation_);
 
-	    // 弾を登録する
-	    bullets_.push_back( newBullet);
-
+	// 弾を登録する
+	bullets_.push_back(newBullet);
 }
-		
 
 void Enemy::Draw(const ViewProjection& viewProjection_) {
 	// モデルの描画
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
-	   
-	
+
 	for (EnemyBullet* bullet : bullets_) {
 		bullet->Draw(viewProjection_);
 	}
 }
-
