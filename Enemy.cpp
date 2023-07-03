@@ -41,7 +41,7 @@ void Enemy::Initialize(Model* model, const Vector3& velocity) {
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 
-
+	worldTransform_.translation_.z = 3.0f;
 
 	
 }
@@ -93,7 +93,7 @@ void Enemy::Fire() {
 	    assert(player_);
 
 	// 弾の速度
-	const float kBulletSpeed = 1.0f;
+	const float kBulletSpeed = 0.5f;
 		  //自キャラのワールド座標を取得する
 	player_->GetWorldPosition();
 	  //敵キャラのワールド座標を取得する
@@ -107,7 +107,7 @@ void Enemy::Fire() {
 	DifferenceVector=Normalize(DifferenceVector);
 	
       //ベクトルの長さを速さに合わせる
-	DifferenceVector = {DifferenceVector.x * 2, DifferenceVector.y * 2, DifferenceVector.z * 2};
+	kBulletSpeed*2;
 
 	//弾を生成し初期化
 	EnemyBullet* newBullet = new EnemyBullet();
