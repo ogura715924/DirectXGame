@@ -24,6 +24,8 @@ public:
 	void Draw(const ViewProjection& viewProjection_);
 	// 攻撃
 	void Fire();
+	// 接近フェーズの初期化
+	void ApproachInitialize();
 	// setterの利用
 	void SetPlayer(Player* player) { player_ = player; }
 
