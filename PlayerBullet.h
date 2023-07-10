@@ -19,7 +19,7 @@ public:
 	// デスフラグ
 	bool isDead_ = false;
 	//メンバ関数の追加
-	bool isDead() const { return isDead_; }
+	bool IsDead() const { return isDead_; }
 
 	private:
 	// ワールド変換データ

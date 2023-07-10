@@ -121,13 +121,12 @@ void Player::Update() {
 	}
 	// デスフラグの立った弾を削除
 	bullets_.remove_if([](PlayerBullet* bullet) {
-		if (bullet->isDead()) {
+		if (bullet->IsDead()) {
 			delete bullet;
 			return true;
 		}
 		return false;
 	});
-
 	// 発射タイマーカウントダウン
 	AttackTimer--;
 	// 指定した時間に達した
