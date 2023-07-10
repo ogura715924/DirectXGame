@@ -131,7 +131,7 @@ void Player::Update() {
 	AttackTimer--;
 	// 指定した時間に達した
 	if (input_->PushKey(DIK_SPACE) && input_->PushKey(DIK_SPACE) == 0 && AttackTimer <= 0) {
-		// 発射タイマーを初期化
+		// 発射タイマーを戻す
 		AttackTimer = kAttackInterval;
 	}
 
@@ -169,6 +169,11 @@ void Player::Attack() {
 		// 弾を登録する
 		bullets_.push_back(newBullet);
 	}
+}
+
+void Player::Interval() {
+	// 発射タイマーを初期化
+	AttackTimer = 3;
 }
 
 void Player::Draw(ViewProjection& ViewProjection) {
