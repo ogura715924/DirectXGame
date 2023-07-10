@@ -30,6 +30,10 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
+	// 発射間隔
+	static const int kFireInterval = 60;
+
+
 private:
 	// 行動フェーズ
 	enum class Phase {
