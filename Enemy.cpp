@@ -129,11 +129,6 @@ void Enemy::ApproachInitialize() {
 	FireTimer = 3;
 }
 
-void Player::Interval() {
-	// 発射タイマーを初期化
-	AttackTimer = 3;
-}
-
 
 void Enemy::Draw(const ViewProjection& viewProjection_) {
 	// モデルの描画
