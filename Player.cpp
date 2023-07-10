@@ -6,6 +6,8 @@
 #include <math.h>
 #define _USE_MATH_DEFINES
 
+
+
 // デストラクタ
 Player::~Player() {
 
@@ -18,6 +20,7 @@ Player::~Player() {
 		delete bullet;
 	}
 }
+
 
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// 引数から受け取ったモデルが組み込まれているかチェック
@@ -38,6 +41,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 
 	// 発射間隔初期化
 	Interval();
+
 }
 void Player::Update() {
 
@@ -135,8 +139,8 @@ void Player::Rotate() {
 void Player::Attack() {
 	// 弾を生成し、初期化
 
-	if (input_->PushKey(DIK_SPACE) && AttackTimer <= 0) {
-
+	if (input_->PushKey(DIK_SPACE)  && AttackTimer <= 0) {
+	
 		// 弾の速度
 		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);
@@ -149,6 +153,7 @@ void Player::Attack() {
 		// 弾を登録する
 		bullets_.push_back(newBullet);
 	}
+
 }
 
 void Player::Interval() {
