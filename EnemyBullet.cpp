@@ -1,7 +1,7 @@
 ﻿#include "EnemyBullet.h"
 #include <cassert>
 
-void EnemyBullet::Intialize(Model* model, const Vector3& position,const ) {
+void EnemyBullet::Intialize(Model* model, const Vector3& position, const Vector3& velocity) {
 
 	//NULLポインタチェック
 	assert(model);
