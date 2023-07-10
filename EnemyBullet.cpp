@@ -22,6 +22,11 @@ void EnemyBullet::Update() {
 //ワールドトランスフォームの更新
 	worldTransform_.UpdateMatrix();
 
+	// 座標を移動させる(1フレーム文の移動量を足しこむ)
+	worldTransform_.translation_.x -= velocity_.x;
+	worldTransform_.translation_.y -= velocity_.y;
+	worldTransform_.translation_.z -= velocity_.z;
+
 	//時間経過でデス
 	if (--deathTimer_ <= 0) {
 		isDead_ = true;
