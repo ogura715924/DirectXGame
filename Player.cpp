@@ -114,6 +114,7 @@ void Player::Update() {
 	
 
 	// キャラクター弾攻撃処理
+	Attack();
 	// 弾更新
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Update();
