@@ -110,6 +110,11 @@ void Enemy::Fire() {
 	bullets_.push_back(newBullet);
 }
 
+void Enemy::ApproachInitialize() {
+	// 発射タイマーを初期化
+	FireTimer = 3;
+}
+
 void Enemy::Draw(const ViewProjection& viewProjection_) {
 	// モデルの描画
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
