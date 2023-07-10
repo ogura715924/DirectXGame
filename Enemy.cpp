@@ -42,6 +42,7 @@ void Enemy::Initialize(Model* model, const Vector3& velocity) {
 	worldTransform_.Initialize();
 
 	worldTransform_.translation_.z = 3.0f;
+
 }
 
 void Enemy::Update() {
@@ -127,6 +128,12 @@ void Enemy::ApproachInitialize() {
 	// 発射タイマーを初期化
 	FireTimer = 3;
 }
+
+void Player::Interval() {
+	// 発射タイマーを初期化
+	AttackTimer = 3;
+}
+
 
 void Enemy::Draw(const ViewProjection& viewProjection_) {
 	// モデルの描画

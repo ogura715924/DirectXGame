@@ -20,8 +20,13 @@ public:
 	void Attack();
 	// デストラクタ
 	~Player();
+	// 発射間隔
+	void Interval();
 	// 描画
 	void Draw(ViewProjection& viewProjection_);
+
+	// 発射間隔
+	static const int kAttackInterval = 20;
 
 	// キーボード入力
 	Input* input_ = nullptr;
@@ -38,4 +43,6 @@ private:
 	Model* model_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
-};
+	// 発射タイマー
+	int32_t AttackTimer = 0;
+    };
