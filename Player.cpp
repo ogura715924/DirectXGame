@@ -6,8 +6,6 @@
 #include <math.h>
 #define _USE_MATH_DEFINES
 
-  
-
 // デストラクタ
 Player::~Player() {
 
@@ -19,18 +17,6 @@ Player::~Player() {
 		// bullet = bullets_[i];をやっていてbullets_の数分だけループする
 		delete bullet;
 	}
-}
-
-Vector3 Player::GetWorldPosition() {
-
-	// ワールド座標を入れる変数
-	Vector3 worldPos{};
-	worldTransform_.matWorld_.m;
-	// ワールド行列の平行移動成分を取得(ワールド座標)
-	worldPos.x = worldTransform_.matWorld_.m[3][0];
-	worldPos.y = worldTransform_.matWorld_.m[3][1];
-	worldPos.z = worldTransform_.matWorld_.m[3][2];
-	return worldPos;
 }
 
 void Player::Initialize(Model* model, uint32_t textureHandle) {
@@ -55,7 +41,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 }
 void Player::Update() {
 
-	
+	// 行列を定数バッファに転送
+	worldTransform_.UpdateMatrix();
 
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
@@ -110,8 +97,6 @@ void Player::Update() {
 	worldTransform_.translation_.z = playerpos[2];
 
 	ImGui::End();
-	
-	
 
 	// キャラクター弾攻撃処理
 	Attack();
@@ -131,15 +116,10 @@ void Player::Update() {
 	AttackTimer--;
 	// 指定した時間に達した
 	if (input_->PushKey(DIK_SPACE) && input_->PushKey(DIK_SPACE) == 0 && AttackTimer <= 0) {
-		// 発射タイマーを戻す
+		// 発射タイマーを初期化
 		AttackTimer = kAttackInterval;
 	}
-
-
-	// 行列を定数バッファに転送
-	worldTransform_.UpdateMatrix();
 }
-
 
 void Player::Rotate() {
 	// 回転速さ[ラジアン/frame]
