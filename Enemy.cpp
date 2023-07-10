@@ -70,7 +70,7 @@ void Enemy::Update() {
 	worldTransform_.UpdateMatrix();
 
 	// 弾関連
-	Fire();
+	
 
 	for (EnemyBullet* bullet : bullets_) {
 		bullet->Update();
