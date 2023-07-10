@@ -47,7 +47,7 @@ void Enemy::Initialize(Model* model, const Vector3& velocity) {
 void Enemy::Update() {
 
 	// 座標を移動させる
-	worldTransform_.translation_.z -= 0.1f;
+	//worldTransform_.translation_.z -= 0.1f;
 
 	// フェーズ
 	switch (phase_) {
