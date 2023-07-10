@@ -35,6 +35,9 @@ void Enemy::Initialize(Model* model, const Vector3& velocity) {
 	// テクスチャ読み込み
 	textureHandle_ = TextureManager::Load("jousi.png");
 
+		// 接近フェーズ初期化
+	ApproachInitialize();
+
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 
