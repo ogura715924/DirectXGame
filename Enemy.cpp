@@ -1,4 +1,5 @@
 ﻿#include "Enemy.h"
+#include"EnemyBullet.h"
 #include<assert.h>
 #include <cassert>
 
@@ -29,7 +30,8 @@ void Enemy::Initialize(Model* model, const Vector3& velocity) {
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 
-
+	//接近フェーズ初期化
+	ApproachInitialize();
 
 	
 }
@@ -39,7 +41,7 @@ void Enemy::Update() {
 	worldTransform_.UpdateMatrix();
 
 	// 座標を移動させる
-	worldTransform_.translation_.z -= 0.1f;
+	//worldTransform_.translation_.z -= 0.1f;
 
 	//フェーズ
 	switch (phase_) {
@@ -48,47 +50,70 @@ void Enemy::Update() {
 		//移動(ベクトルを加算)
 		worldTransform_.translation_.x += 0.1f;
 		//既定の位置に到達したら離脱
-		if (worldTransform_.translation_.z < 0.0f) {
+		if (worldTransform_.translation_.x > 2.0f) {
 			phase_ = Phase::Leave;
 		}
 	case Phase::Leave:
 		//移動（ベクトルを加算）
-		worldTransform_.translation_.x += 0.1f;
-		worldTransform_.translation_.y += 0.1f;
+		//worldTransform_.translation_.x += 0.1f;
+		worldTransform_.translation_.z -= 0.1f;
 		break;
 	}
 
+	
 
-	//弾関連
-	Fire();
-		for (EnemyBullet* bullet : bullets_) {
-			bullet->Update();
-		}
-		//デスフラグの立った弾を削除
-	    bullets_.remove_if([](EnemyBullet* bullet) {
-		    if (bullet->IsDead()) {
-			    delete bullet;
-			    return true;
-		    }
-		    return false;
-	    });
-
+	//弾
+	
+	// 弾の更新
+	for (EnemyBullet* bullet : bullets_) {
+		bullet->Update();
 	}
+
+	//  デスフラグの立った弾を削除
+	bullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+
+	// 発射タイマーカウントダウン
+	FireTimer--;
+	// 指定した時間に達した
+	if (FireTimer <= 0) {
+		// 弾を発射
+		Fire();
+		// 発射タイマーを初期化
+		FireTimer = kFireInterval;
+	}
+		
+	
+	}
+
 
 
 void Enemy::Fire() {
 	// 弾の速度
-	const float kBulletSpeed = 1.0f;
+	const float kBulletSpeed = 0.5f;
 	Vector3 velocity(0, 0, kBulletSpeed);
 	//弾を生成し初期化
 	EnemyBullet* newBullet = new EnemyBullet();
-	newBullet->Intialize(model_, worldTransform_.translation_);
-
+	newBullet->Intialize(model_, worldTransform_.translation_, velocity_);
+	
+	// 弾を登録する
 	    // 弾を登録する
 	    bullets_.push_back( newBullet);
+	
+	   
+	
 
 }
 		
+void Enemy::ApproachInitialize() {
+	//発射タイマーを初期化
+	    FireTimer = 3;
+}
 
 void Enemy::Draw(const ViewProjection& viewProjection_) {
 	// モデルの描画

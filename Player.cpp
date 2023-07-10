@@ -39,7 +39,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 
-
+	// 発射間隔初期化
+	Interval();
 
 }
 void Player::Update() {
@@ -109,12 +110,19 @@ void Player::Update() {
 	}
 	// デスフラグの立った弾を削除
 	bullets_.remove_if([](PlayerBullet* bullet) {
-		if (bullet->isDead()) {
+		if (bullet->IsDead()) {
 			delete bullet;
 			return true;
 		}
 		return false;
 	});
+	// 発射タイマーカウントダウン
+	AttackTimer--;
+	// 指定した時間に達した
+	if (input_->PushKey(DIK_SPACE) && input_->PushKey(DIK_SPACE) == 0 && AttackTimer <= 0) {
+		// 発射タイマーを初期化
+		AttackTimer = kAttackInterval;
+	}
 }
 
 void Player::Rotate() {
@@ -131,7 +139,7 @@ void Player::Rotate() {
 void Player::Attack() {
 	// 弾を生成し、初期化
 
-	if (input_->PushKey(DIK_SPACE)) {
+	if (input_->PushKey(DIK_SPACE)  && AttackTimer <= 0) {
 	
 		// 弾の速度
 		const float kBulletSpeed = 1.0f;
@@ -145,8 +153,13 @@ void Player::Attack() {
 		// 弾を登録する
 		bullets_.push_back(newBullet);
 	}
+
 }
 
+void Player::Interval() {
+	// 発射タイマーを初期化
+	AttackTimer = 3;
+}
 
 void Player::Draw(ViewProjection& ViewProjection) {
 	// 3Dモデルを描画

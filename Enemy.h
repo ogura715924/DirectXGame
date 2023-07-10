@@ -19,13 +19,18 @@ public:
 	void Initialize(Model* model_, const Vector3& velocity);
 	// 更新
 	void Update();
-	// 描画
-	void Draw(const ViewProjection& viewProjection_);
 	//攻撃
 	void Fire();
 	//デストラクタ
 	~Enemy();
-	
+	//接近フェーズの初期化
+	void ApproachInitialize();
+	// 描画
+	void Draw(const ViewProjection& viewProjection_);
+
+	//発射間隔
+	static const int kFireInterval = 60;
+
 
 private:
 	// ワールド変換データ
@@ -42,5 +47,8 @@ private:
 	// 弾
 	EnemyBullet* bullet_ = nullptr;
 	std::list<EnemyBullet*> bullets_;
+
+	// 発射タイマー
+	int32_t FireTimer = 0;
 };
 
