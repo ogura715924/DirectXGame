@@ -1,7 +1,7 @@
 ﻿#include "EnemyBullet.h"
 #include <cassert>
 
-void EnemyBullet::Intialize(Model* model, const Vector3& position) {
+void EnemyBullet::Intialize(Model* model, const Vector3& position,const ) {
 
 	//NULLポインタチェック
 	assert(model);
@@ -15,6 +15,9 @@ void EnemyBullet::Intialize(Model* model, const Vector3& position) {
 
 	//引数で受け取った初期座標をセット
 	worldTransform_.translation_ = position;
+
+	// 引数で受け取った速度をメンバ変数に代入
+	velocity_ = velocity;
 
 }
 
