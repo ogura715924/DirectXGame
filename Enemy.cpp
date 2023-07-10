@@ -83,6 +83,16 @@ void Enemy::Update() {
 		}
 		return false;
 	});
+
+	// 発射タイマーカウントダウン
+	FireTimer--;
+	// 指定した時間に達した
+	if (FireTimer <= 0) {
+		// 弾を発射
+		Fire();
+		// 発射タイマーを初期化
+		FireTimer = kFireInterval;
+	}
 }
 
 void Enemy::Fire() {
