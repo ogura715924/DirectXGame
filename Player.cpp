@@ -119,7 +119,7 @@ void Player::Update() {
 	// 発射タイマーカウントダウン
 	AttackTimer--;
 	// 指定した時間に達した
-	if (input_->PushKey(DIK_SPACE) && input_->PushKey(DIK_SPACE) == 0 && AttackTimer <= 0) {
+	if (input_->PushKey(DIK_SPACE) && AttackTimer <= 0) {
 		// 発射タイマーを初期化
 		AttackTimer = kAttackInterval;
 	}
