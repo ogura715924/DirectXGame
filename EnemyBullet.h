@@ -6,7 +6,7 @@
 class EnemyBullet {
 public:
 	
-	void Intialize(Model* model, const Vector3& position);
+	void Intialize(Model* model, const Vector3& position, const Vector3& velocity);
 	void Update();
 	void Draw(const ViewProjection&viewProjection);
 
@@ -24,6 +24,10 @@ public:
 	    Model* model_=nullptr;
 	// テクスチャハンドル
 	    uint32_t textureHandle_ = 0u;
+
+		  // 速度
+	    Vector3 velocity_;
+
 		//寿命
 	    static const int32_t kLifeTime = 60 * 5;
 		
