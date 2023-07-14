@@ -100,7 +100,7 @@ void Enemy::Fire() {
 	assert(player_);
 
 	// 弾の速度
-	const float kBulletSpeed = 0.5f;
+	const float kBulletSpeed = 1.0f;
 	// 自キャラのワールド座標を取得する
 	player_->GetWorldPosition();
 	// 敵キャラのワールド座標を取得する
@@ -112,9 +112,10 @@ void Enemy::Fire() {
 	    GetWorldPosition().z - player_->GetWorldPosition().z};
 	// ベクトルの正規化
 	DifferenceVector = Normalize(DifferenceVector);
-
 	// ベクトルの長さを速さに合わせる
-	kBulletSpeed * 2;
+	velocity_.x = DifferenceVector.x*kBulletSpeed;
+	velocity_.y = DifferenceVector.y * kBulletSpeed;
+	velocity_.z = DifferenceVector.z * kBulletSpeed;
 
 	// 弾を生成し初期化
 	EnemyBullet* newBullet = new EnemyBullet();
